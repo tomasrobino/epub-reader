@@ -16,7 +16,6 @@ async function extract() {
             contentOPF = (await directory[i].buffer()).toString();
         }
     }
-    console.log(contentOPF)
     return contentOPF;
 }
 
