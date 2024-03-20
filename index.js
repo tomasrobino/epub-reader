@@ -3,20 +3,18 @@ const fs = require("node:fs");
 const { XMLParser } = require("fast-xml-parser");
 
 
-//Extracting epub to cache file
-function extract() {
-    fs.unlink("result.txt", err => {
-        if (err) throw err;
-    });
-    let stream = fs.createWriteStream("result.txt", {flags: "a"});
-    fs.createReadStream("example.epub")
-    .pipe(unzipper.Parse())
-    .on("entry", async entry => {
-        stream.write(await entry.buffer())
-    });
-}
+//Extracting epub to mempory
+async function main() {
+    const directory = (await unzipper.Open.file('example.epub')).files;
+    for (let i = 0; i < directory.length; i++) {
+        const path = directory[i].path;
+        if (path.includes("container.xml")) {
 
-extract()
+        }
+    }
+  }
+  
+main();
 
 //Parsing container.xml
 /*
