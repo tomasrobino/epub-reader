@@ -19,10 +19,14 @@ async function createWindow() {
     height: 600
   })
   const directory = (await Open.file(process.argv[2])).files;
-  //console.log(await extract(directory))
-  win.loadURL("data:text/xml,"+(await getFile(directory, "content.opf")).toString());
+  const parser = new XMLParser({ ignoreAttributes: false });
+  //Get contents of content.opf
+  const contentOPF = parser.parse(await getFile(directory, "content.opf"));
+  const spine = contentOPF.package.spine
+  const cover = spine.itemref[0]["@_idref"];
+  win.loadURL("data:text/xml,"+(await getFile(directory, cover)).toString());
 }
-
+ 
 app.whenReady().then(() => {
   createWindow()
 })
